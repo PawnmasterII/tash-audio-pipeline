@@ -1,0 +1,9 @@
+# In-car health monitor audio pipeline — pre-trained libraries only.
+numpy>=1.24
+scipy>=1.10
+noisereduce>=3.0.0
+vosk>=0.3.45            # offline ASR cue-word spotting — NO key, recognizes "help"
+pvrecorder>=1.2         # live-mic capture for the demo
+librosa>=0.10
+soundfile>=0.12         # test-harness WAV I/O (libsndfile)
+webrtcvad>=2.0.10       # OPTIONAL production VAD; energy fallback if absent (no 3.14 wheel)

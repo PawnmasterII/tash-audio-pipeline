@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.venv312/
+venv/
+
+# Test artifacts
+test_audio/*.wav
+
+# Vosk model (downloaded via download_vosk_model.py, not committed)
+models/

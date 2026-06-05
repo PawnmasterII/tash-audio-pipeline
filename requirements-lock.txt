@@ -1,0 +1,75 @@
+# requirements-lock.txt
+# Locked versions for reproducible builds across Windows / macOS / Linux.
+# Generated: 2026-06-04  (from the working .venv312 environment)
+# Python 3.12 ONLY  (production stack: real webrtcvad-wheels + librosa)
+# Install: pip install -r requirements-lock.txt
+#
+# This is a FULL freeze of a known-good Python 3.12.10 environment — direct
+# dependencies AND every transitive dependency are pinned with == so any machine
+# gets a byte-identical dependency set. requirements.txt (with >= ranges) stays
+# the human-edited source of intent; THIS file is the reproducible build.
+#
+# ⚠️  This file goes stale when requirements.txt changes. To regenerate after a
+#     dependency bump, from an activated, verified 3.12 venv:
+#         pip freeze > requirements-lock.txt
+#     then re-add this header block.
+
+# ── Direct dependencies (mirror requirements.txt) ────────────────────────────
+numpy==2.4.6
+scipy==1.17.1
+noisereduce==3.0.3
+vosk==0.3.45              # offline ASR cue-word spotting — no key, recognizes "help"
+pvrecorder==1.2.7         # live-mic capture for the demo
+librosa==0.11.0
+soundfile==0.13.1         # test-harness WAV I/O (libsndfile)
+webrtcvad-wheels==2.0.14  # OPTIONAL production VAD; imports as `webrtcvad`. Windows/Linux x86-64 + macOS have wheels here; if pip finds no wheel for your platform/arch, OMIT this line — Stage 2 falls back to the coarse RMS energy gate (config.ENERGY_VAD_RMS_THRESHOLD).
+
+# ── Transitive dependencies (pinned for reproducibility) ─────────────────────
+# librosa stack
+audioread==3.1.0
+decorator==5.3.1
+joblib==1.5.3
+lazy-loader==0.5
+llvmlite==0.47.0
+msgpack==1.1.2
+numba==0.65.1
+pooch==1.9.0
+scikit-learn==1.9.0
+soxr==1.1.0
+threadpoolctl==3.6.0
+# vosk runtime
+cffi==2.0.0
+pycparser==3.0
+requests==2.34.2
+srt==3.5.3
+tqdm==4.67.3
+websockets==16.0
+# soundfile / cffi backend
+# (cffi/pycparser shared with vosk, listed once above)
+# networking / requests chain
+certifi==2026.5.20
+charset-normalizer==3.4.7
+idna==3.18
+urllib3==2.7.0
+# matplotlib (pulled in by librosa's optional display extras in this env)
+matplotlib==3.10.9
+contourpy==1.3.3
+cycler==0.12.1
+fonttools==4.63.0
+kiwisolver==1.5.0
+pillow==12.2.0
+pyparsing==3.3.2
+# misc shared utilities
+colorama==0.4.6           # Windows ANSI color support (tqdm/console)
+narwhals==2.22.0
+packaging==26.2
+platformdirs==4.10.0
+python-dateutil==2.9.0.post0
+six==1.17.0
+typing_extensions==4.15.0
+
+# ── Validation (run after a clean install into a fresh 3.12 venv) ────────────
+# py -3.12 -m venv .venv312
+# .venv312\Scripts\python.exe -m pip install -r requirements-lock.txt
+# .venv312\Scripts\python.exe -c "import vosk, librosa; print('OK')"
+# .venv312\Scripts\python.exe quick_start.py
