@@ -67,7 +67,7 @@ class _Reblocker:
 class CueWordDetector:
     """Vosk-backed cue-word spotter. No access key required."""
 
-    def __init__(self) -> None:
+    def __init__(self, cue_words: list[str] | None = None) -> None:
         if vosk is None:
             raise CueWordError("vosk not installed (required for Stage 2)")
         if not os.path.isdir(config.VOSK_MODEL_PATH):
@@ -97,7 +97,8 @@ class CueWordDetector:
         self._hangover = 0
         self._speech_present = False
         self._last_event_ts = -1e9
-        self._cue_set = {w.lower() for w in config.CUE_WORDS}
+        self._cue_set = {w.lower() for w in (cue_words if cue_words is not None else config.CUE_WORDS)}
+        self._reassurance_set = {w.lower() for w in config.REASSURANCE_WORDS}
 
     @property
     def speech_present(self) -> bool:
@@ -148,12 +149,14 @@ class CueWordDetector:
         if hit is not None and self._debounced(ts):
             self._last_event_ts = ts
             keyword, conf = hit
+            category = "reassurance" if keyword in self._reassurance_set else "distress"
             return CueWordEvent(
                 ts=ts,
                 keyword=keyword,
                 vad_active=self._speech_present,
                 sensitivity=config.CUE_WORD_MIN_CONFIDENCE,
                 confidence_proxy=conf,
+                category=category,
             )
         return None
 
@@ -167,9 +170,10 @@ class CueWordDetector:
         if hit is not None and self._debounced(ts):
             self._last_event_ts = ts
             keyword, conf = hit
+            category = "reassurance" if keyword in self._reassurance_set else "distress"
             return CueWordEvent(ts=ts, keyword=keyword, vad_active=False,
                                 sensitivity=config.CUE_WORD_MIN_CONFIDENCE,
-                                confidence_proxy=conf)
+                                confidence_proxy=conf, category=category)
         return None
 
     def close(self) -> None:

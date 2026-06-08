@@ -17,10 +17,10 @@ import sys
 
 # ── console glyphs (degrade gracefully if the terminal can't encode emoji) ───
 try:
-    "🟢🔴🟡✅❌".encode(sys.stdout.encoding or "utf-8")
-    OK, BAD, WARN, DONE, FAIL = "🟢", "🔴", "🟡", "✅", "❌"
+    "🟢🔴🟡✅❌→═".encode(sys.stdout.encoding or "utf-8")
+    OK, BAD, WARN, DONE, FAIL, ARROW = "🟢", "🔴", "🟡", "✅", "❌", "→"
 except (UnicodeEncodeError, TypeError):
-    OK, BAD, WARN, DONE, FAIL = "[OK]", "[X]", "[!]", "[OK]", "[FAIL]"
+    OK, BAD, WARN, DONE, FAIL, ARROW = "[OK]", "[X]", "[!]", "[OK]", "[FAIL]", "->"
 
 # Activated-venv hint, correct for the current OS.
 if os.name == "nt":
@@ -208,7 +208,7 @@ def main() -> int:
         print(
             "\nNext steps:\n"
             "  1. Run: python live_mic_test.py\n"
-            "     → say \"help\" into your mic; expect: >>> DETECTED 'help' ...\n"
+            f"     {ARROW} say \"help\" into your mic; expect: >>> DETECTED 'help' ...\n"
             "  2. Read: README.md (architecture + data flow)\n"
             "  3. See:  tests/ (four-layer test suite)\n"
             "\nQuestions? Ping the team channel (see README.md).\n"

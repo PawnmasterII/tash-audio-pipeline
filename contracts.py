@@ -33,6 +33,7 @@ class CueWordEvent:
     vad_active: bool
     sensitivity: float
     confidence_proxy: float         # 0..1, NOT a calibrated probability
+    category: str = "distress"      # "distress" or "reassurance"
 
 
 class BreathingState(str, Enum):

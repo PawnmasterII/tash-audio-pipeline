@@ -49,6 +49,9 @@ VOSK_MODEL_PATH = _os.path.join(
 # Distress cue words to spot. Matched as whole words in Vosk's full-vocabulary
 # transcript (NOT a restricted grammar — that force-decodes noise into "help").
 CUE_WORDS: list[str] = ["help"]
+# Reassurance words: passenger response to a VOICE_CHECK_IN prompt. Recognized
+# during the armed response window; de-escalate if heard, escalate on silence.
+REASSURANCE_WORDS: list[str] = ["fine", "okay", "ok"]
 CUE_WORD_DEBOUNCE_MS = 1_500
 CUE_WORD_MIN_CONFIDENCE = 0.5      # reject low-confidence final-result matches
 
