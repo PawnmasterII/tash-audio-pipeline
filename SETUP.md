@@ -124,6 +124,8 @@ Say **"help"** clearly; you should see:
 ```
   >>> DETECTED 'help' at t=3.2s (conf=0.87)
 ```
+To test reassurance detection, pass extra words when constructing the detector
+(`cue_words=["help", "fine", "okay", "ok"]`) — see `config.REASSURANCE_WORDS`.
 Press **Ctrl+C** to stop.
 
 ---
