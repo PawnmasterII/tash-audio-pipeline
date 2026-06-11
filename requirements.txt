@@ -6,4 +6,5 @@ vosk>=0.3.45            # offline ASR cue-word spotting — NO key, recognizes "
 pvrecorder>=1.2         # live-mic capture for the demo
 librosa>=0.10
 soundfile>=0.12         # test-harness WAV I/O (libsndfile)
+rich>=13.0              # live console terminal dashboard (demo/live_console.py)
 webrtcvad>=2.0.10       # OPTIONAL production VAD; energy fallback if absent (no 3.14 wheel)

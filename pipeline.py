@@ -17,13 +17,13 @@ from stage3_breathing import BreathingDetector
 
 
 class Pipeline:
-    def __init__(self) -> None:
+    def __init__(self, cue_words: list[str] | None = None) -> None:
         self.denoiser = Denoiser()
         self.breathing = BreathingDetector()
         self.fusion = FusionEngine()
         self.degraded = False
         try:
-            self.cueword: CueWordDetector | None = CueWordDetector()
+            self.cueword: CueWordDetector | None = CueWordDetector(cue_words=cue_words)
         except CueWordError as e:  # fail loud, run degraded (no keyword path)
             print(f"[DEGRADED] cue-word stage disabled: {e}")
             self.cueword = None

@@ -1,0 +1,33 @@
+======================================================================
+TASHaudio — Evaluation Report (synthetic corpus)
+======================================================================
+
+clip                  description               cue   max level  verdict
+----------------------------------------------------------------------
+say_help.wav          Distress word: 'help'     HIT   confirm    PASS
+say_negative.wav      Non-cue speech            -     none       PASS
+clean_silence.wav     Near-silence              -     none       PASS
+road_noise.wav        Cabin road noise          -     none       PASS
+normal_breathing.wav  Normal breathing ~15/min  -     monitor    PASS
+agonal_gasps.wav      Agonal gasps ~4/min       -     confirm    PASS
+----------------------------------------------------------------------
+
+CUE-WORD DETECTOR (Stage 2 — Vosk offline ASR)
+  True positives : 1    False negatives: 0
+  False positives: 0    True negatives : 5
+  Detection rate (TPR) : 100.0%   (target >= 95%)
+  False-positive rate  :   0.0%   (target  < 5%)
+  Precision            : 100.0%
+
+BREATHING DETECTOR (Stage 3 — advisory)
+  Agonal/apnea caught  : 1/1
+  False alarms on benign clips: 0/5
+
+LATENCY BUDGET (engineering targets, config.AUDIO_LATENCY_MS)
+  stage1_denoise          10 ms
+  stage2_vosk_partial     50 ms
+  stage2_vosk_final      150 ms
+  stage3_breathing        20 ms
+  fusion_logic            15 ms
+  TOTAL                  195 ms   (ceiling 200 ms)
+======================================================================
